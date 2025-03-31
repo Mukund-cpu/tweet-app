@@ -10,7 +10,7 @@ def index(request):
 
 
 def tweet_list(request):
-    tweets = Tweet.objects.all().order_by('-created-at')
+    tweets = Tweet.objects.all().order_by('-created_at')
     return render(request, 'tweet_list.html', {'tweets': tweets})
 
 
@@ -35,6 +35,7 @@ def tweet_edit(request, tweet_id):
         if form.is_valid():
             tweet = form.save(commit=False)
             tweet.user = request.user
+            tweet.save()
             return redirect('tweet_list')
     else:
         form = TweetForm(instance=tweet)
